@@ -9,7 +9,8 @@ const serviceController = {
         description: req.body.description,
         type: req.body.type,
         value: req.body.value,
-        mounth: req.body.mounth
+        mounth: req.body.mounth,
+        method_payment: req.body.method_payment
       }
 
       const response = await ServiceModel.create(service)
@@ -76,7 +77,8 @@ const serviceController = {
         description: req.body.description,
         type: req.body.type,
         value: req.body.value,
-        mounth: req.body.mounth
+        mounth: req.body.mounth,
+        method_payment: req.body.method_payment
       }
 
       const updateService = await ServiceModel.findByIdAndUpdate(id, service)

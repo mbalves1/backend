@@ -6,6 +6,7 @@ const serviceSchema = new Schema({
     name: String,
     description: String,
     type: String,
+    method_payment: String,
     value: Number,
     mounth: String
   },

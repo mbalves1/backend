@@ -1,4 +1,4 @@
-POST http://localhost:3000/api/services
+POST https://backend-finplan.vercel.app/api/services
 Content-Type: application/json
 
 {
