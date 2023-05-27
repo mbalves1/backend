@@ -5,8 +5,8 @@ Content-Type: application/json
   "name": "Aluguel",
   "description": "Aluguel teste",
   "type": "Saída",
-  "value": 1000,
-  "mounth": "Março"
+  "value": 2000,
+  "mounth": "Abril"
 }
 
 ###
