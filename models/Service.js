@@ -1,0 +1,20 @@
+const mongoose = require("mongoose")
+
+const { Schema } = mongoose
+
+const serviceSchema = new Schema({
+    name: String,
+    description: String,
+    type: String,
+    value: Number,
+    mounth: String
+  },
+  { timestamps: true }
+)
+
+const Service = mongoose.model("Service", serviceSchema)
+
+module.exports = {
+  Service,
+  serviceSchema,
+}

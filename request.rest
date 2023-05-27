@@ -1,0 +1,31 @@
+POST http://localhost:3000/api/services
+Content-Type: application/json
+
+{
+  "name": "Aluguel",
+  "description": "Aluguel teste",
+  "type": "Saída",
+  "value": 1000,
+  "mounth": "Março"
+}
+
+###
+GET http://localhost:3000/api/services
+
+###
+GET http://localhost:3000/api/services/6472028dc110d969ac973e16
+
+###
+DELETE http://localhost:3000/api/services/647207461a0c636752368084
+
+###
+PUT http://localhost:3000/api/services/64720a712c401f651d0e0a0b
+Content-Type: application/json
+
+{
+  "name": "Aluguel",
+  "description": "Atualizaçao",
+  "type": "Saída",
+  "value": 1000,
+  "mounth": "Abril"
+}
