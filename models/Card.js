@@ -2,8 +2,6 @@ const mongoose = require("mongoose")
 
 const { Schema } = mongoose
 
-const { serviceSchema } = require("./Service")
-
 const cardsSchema = new Schema({
     name: String, // apelido para cartao
     bank: String, // banco
@@ -11,8 +9,7 @@ const cardsSchema = new Schema({
     flag: String,
     expiration: String, 
     number_card: Number, // numero cartao
-    code: Number,
-    attached: [serviceSchema] // cartao atrelado a uma transacao
+    code: Number // cartao atrelado a uma transacao
   },
   { timestamps: true }
 )

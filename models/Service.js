@@ -2,13 +2,16 @@ const mongoose = require("mongoose")
 
 const { Schema } = mongoose
 
+const { cardsSchema } = require("./Card")
+
 const serviceSchema = new Schema({
     name: String,
     description: String,
     type: String,
     method_payment: String,
     value: Number,
-    month: String
+    month: String,
+    attached: [cardsSchema]
   },
   { timestamps: true }
 )

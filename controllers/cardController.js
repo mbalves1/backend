@@ -11,8 +11,7 @@ const cardController = {
         flag: req.body.flag,
         expiration: req.body.expiration,
         number_card: req.body.number_card,
-        code: req.body.code,
-        attached: req.body.attached
+        code: req.body.code
       }
 
       const response = await CardModel.create(card)
@@ -81,8 +80,7 @@ const cardController = {
         flag: req.body.flag,
         expiration: req.body.expiration,
         number_card: req.body.number_card,
-        code: req.body.code,
-        attached: req.body.attached
+        code: req.body.code
       }
 
       const updateCard = await CardModel.findByIdAndUpdate(id, card)
