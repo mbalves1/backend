@@ -9,7 +9,7 @@ const serviceController = {
         description: req.body.description,
         type: req.body.type,
         value: req.body.value,
-        mounth: req.body.mounth,
+        month: req.body.month,
         method_payment: req.body.method_payment
       }
 
@@ -77,7 +77,7 @@ const serviceController = {
         description: req.body.description,
         type: req.body.type,
         value: req.body.value,
-        mounth: req.body.mounth,
+        month: req.body.month,
         method_payment: req.body.method_payment
       }
 

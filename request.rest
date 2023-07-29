@@ -2,12 +2,42 @@ POST https://backend-finplan.vercel.app/api/services
 Content-Type: application/json
 
 {
-  "name": "Aluguel",
-  "description": "Aluguel teste",
-  "type": "Saída",
+  "name": "Salario",
+  "description": "Salario",
+  "type": "Entrada",
   "value": 2000,
-  "mounth": "Abril"
+  "month": "Março"
 }
+
+###
+POST https://backend-finplan.vercel.app/api/services
+Content-Type: application/json
+
+{
+  "name": "FII",
+  "description": "Salario",
+  "type": "Entrada",
+  "value": 150,
+  "month": "Março"
+}
+
+###
+POST http://localhost:3000/api/cards
+Content-Type: application/json
+
+{
+  "name": "Murilo B",
+  "bank": "C6",
+  "type": "Crédito",
+  "flag": "Mastercard",
+  "expiration": "03/06",
+  "number_card": 32333335,
+  "code": 555
+}
+
+###
+GET http://localhost:3000/api/cards
+
 
 ###
 GET http://localhost:3000/api/services
@@ -19,13 +49,17 @@ GET http://localhost:3000/api/services/6472028dc110d969ac973e16
 DELETE http://localhost:3000/api/services/647207461a0c636752368084
 
 ###
-PUT http://localhost:3000/api/services/64720a712c401f651d0e0a0b
+DELETE http://localhost:3000/api/cards/64c555254330b9d102f27f15
+
+###
+PUT https://backend-finplan.vercel.app/api/services/64722cfc664089f8321a1716
 Content-Type: application/json
 
 {
   "name": "Aluguel",
-  "description": "Atualizaçao",
+  "description": "Aluguel teste",
   "type": "Saída",
-  "value": 1000,
-  "mounth": "Abril"
+  "method_payment": "cartao",
+  "value": 1500,
+  "month": "Março"
 }

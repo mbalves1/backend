@@ -8,7 +8,7 @@ const serviceSchema = new Schema({
     type: String,
     method_payment: String,
     value: Number,
-    mounth: String
+    month: String
   },
   { timestamps: true }
 )
