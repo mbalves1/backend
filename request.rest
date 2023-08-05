@@ -74,3 +74,9 @@ Content-Type: application/json
   "value": 1500,
   "month": "Março"
 }
+
+# auth
+
+###
+POST http://localhost:3000/auth/register
+Content-Type: application/json
