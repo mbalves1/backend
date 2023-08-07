@@ -11,7 +11,8 @@ const serviceSchema = new Schema({
     method_payment: String,
     value: Number,
     month: String,
-    attached: [cardsSchema]
+    attached: [cardsSchema],
+    id: String
   },
   { timestamps: true }
 )

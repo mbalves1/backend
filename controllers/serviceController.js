@@ -3,6 +3,7 @@ const { Service: ServiceModel } = require("../models/Service")
 const serviceController = {
   
   create: async(req, res) => {
+    const { id } = req.user
     try {
       const service = {
         name: req.body.name,
@@ -11,7 +12,8 @@ const serviceController = {
         value: req.body.value,
         month: req.body.month,
         method_payment: req.body.method_payment,
-        attached: req.body.attached
+        attached: req.body.attached,
+        id: id
       }
 
       const response = await ServiceModel.create(service)
@@ -25,7 +27,8 @@ const serviceController = {
 
   getAll: async (req, res) => {
     try {
-      const services = await ServiceModel.find();
+      const { id } = req.user
+      const services = await ServiceModel.find({ id });
 
       res.json(services)
 
