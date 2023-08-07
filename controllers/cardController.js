@@ -3,6 +3,7 @@ const { Card: CardModel } = require("../models/Card")
 const cardController = {
   
   create: async(req, res) => {
+    const { id } = req.user
     try {
       const card = {
         name: req.body.name,
@@ -11,7 +12,8 @@ const cardController = {
         flag: req.body.flag,
         expiration: req.body.expiration,
         number_card: req.body.number_card,
-        code: req.body.code
+        code: req.body.code,
+        id: id
       }
 
       const response = await CardModel.create(card)
@@ -25,7 +27,8 @@ const cardController = {
 
   getAll: async (req, res) => {
     try {
-      const cards = await CardModel.find();
+      const { id } = req.user
+      const cards = await CardModel.find({ id });
 
       res.json(cards)
 

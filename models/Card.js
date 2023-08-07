@@ -9,7 +9,8 @@ const cardsSchema = new Schema({
     flag: String,
     expiration: String, 
     number_card: Number, // numero cartao
-    code: Number // cartao atrelado a uma transacao
+    code: Number, // cartao atrelado a uma transacao
+    id: String, // cartao atrelado a uma transacao
   },
   { timestamps: true }
 )

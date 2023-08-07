@@ -94,8 +94,6 @@ const authController = {
 
       res.status(200).json({ msg: "Successfully authenticated", token })
 
-      console.log(token)
-
     } catch (error) {
       console.error(error)
       res.status(500).json({ msg: "Erro ao logar, tente novamente mais tarde!" })
