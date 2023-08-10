@@ -6,7 +6,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const corsOptions = {
-  origin: 'http://localhost:3000', // Origem permitida (seu frontend)
+  origin: ['http://localhost:3000', 'https://fin-card.vercel.app'], // Origem permitida (seu frontend)
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos permitidos
   credentials: true, // Permitir cookies e cabeçalhos de autenticação
 };
