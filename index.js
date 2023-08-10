@@ -5,10 +5,15 @@ const app = express()
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+const corsOptions = {
+  origin: 'http://localhost:3000', // Origem permitida (seu frontend)
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Métodos permitidos
+  credentials: true, // Permitir cookies e cabeçalhos de autenticação
+};
 
-const port = 3000;
+const port = 3001;
 
-app.use(cors())
+app.use(cors(corsOptions))
 app.use(express.json());
 
 const conn = require("./db/conn")
