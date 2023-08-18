@@ -10,6 +10,7 @@ const cardsSchema = new Schema({
     expiration: String, 
     number_card: Number, // numero cartao
     code: Number, // cartao atrelado a uma transacao
+    color: String,
     id: String, // cartao atrelado a uma transacao
   },
   { timestamps: true }

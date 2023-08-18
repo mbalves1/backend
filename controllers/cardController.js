@@ -13,6 +13,7 @@ const cardController = {
         expiration: req.body.expiration,
         number_card: req.body.number_card,
         code: req.body.code,
+        color: req.body.color,
         id: id
       }
 
@@ -83,7 +84,8 @@ const cardController = {
         flag: req.body.flag,
         expiration: req.body.expiration,
         number_card: req.body.number_card,
-        code: req.body.code
+        code: req.body.code,
+        color: req.body.color
       }
 
       const updateCard = await CardModel.findByIdAndUpdate(id, card)
