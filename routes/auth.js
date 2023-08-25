@@ -1,6 +1,7 @@
 const router = require("express").Router()
 
 const authController = require("../controllers/authController")
+const checkToken = require("../middleware/checkToken.js")
 
 router
   .route("/auth/register")
@@ -11,8 +12,8 @@ router
   .post((req, res) => authController.createL(req, res))
 
 router
-  .route("/user/:id")
-  .get((req, res) => authController.getUser(req, res))
+  .route("/user")
+  .get(checkToken, (req, res) => authController.getUser(req, res))
 
 
   module.exports = router

@@ -100,21 +100,41 @@ const authController = {
     }
   },
 
+  // getUser: async (req, res) => {
+  //   try {
+  //     // Aqui você chama o middleware checkToken antes de continuar com a lógica da rota
+  //     checkToken(req, res, async () => {
+  //       const id = req.params.id;
+
+  //       // Check if user exists
+  //       const user = await UserModel.findById(id, "-password");
+
+  //       if (!user) {
+  //         return res.status(404).json({ msg: "User not found!" });
+  //       }
+
+  //       res.status(200).json({ user });
+  //     });
+  //   } catch (error) {
+  //     console.error(error);
+  //     res.status(500).json({ msg: "Erro ao obter usuário, tente novamente mais tarde!" });
+  //   }
+  // }
+
   getUser: async (req, res) => {
     try {
       // Aqui você chama o middleware checkToken antes de continuar com a lógica da rota
-      checkToken(req, res, async () => {
-        const id = req.params.id;
+      const { id } = req.user
 
-        // Check if user exists
-        const user = await UserModel.findById(id, "-password");
+      // Check if user exists
+      const user = await UserModel.findById(id);
 
-        if (!user) {
-          return res.status(404).json({ msg: "User not found!" });
-        }
+      if (!user) {
+        return res.status(404).json({ msg: "User not found!" });
+      }
 
-        res.status(200).json({ user });
-      });
+      res.status(200).json({ user });
+    
     } catch (error) {
       console.error(error);
       res.status(500).json({ msg: "Erro ao obter usuário, tente novamente mais tarde!" });
