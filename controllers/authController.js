@@ -133,7 +133,10 @@ const authController = {
         return res.status(404).json({ msg: "User not found!" });
       }
 
-      res.status(200).json({ user });
+      const userWithoutPassword = { ...user.toObject() };
+      delete userWithoutPassword.password;
+
+      res.status(200).json({ user: userWithoutPassword });
     
     } catch (error) {
       console.error(error);
