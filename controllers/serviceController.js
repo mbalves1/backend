@@ -27,8 +27,10 @@ const serviceController = {
 
   getAll: async (req, res) => {
     try {
-      const { id } = req.user
-      const services = await ServiceModel.find({ id });
+      const { id } = req.user;
+    
+      .limit(perPage); // Limita o número de resultados na página
+
 
       res.json(services)
 
