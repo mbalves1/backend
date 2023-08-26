@@ -27,8 +27,17 @@ const serviceController = {
 
   getAll: async (req, res) => {
     try {
-      const { id } = req.user
-      const services = await ServiceModel.find({ id });
+      const { id } = req.user;
+      const page = parseInt(req.query.page) || 1; // Página atual (padrão: 1 se não for fornecida)
+      const perPage = parseInt(req.query.perPage) || 10; // Número de resultados por página (padrão: 10 se não for fornecida)
+
+      // Calcula o índice do primeiro resultado da página atual
+      const startIndex = (page - 1) * perPage;
+
+      const services = await ServiceModel.find({ id })
+        .skip(startIndex) // Pula os resultados anteriores à página atual
+        .limit(perPage); // Limita o número de resultados na página
+
 
       res.json(services)
 
