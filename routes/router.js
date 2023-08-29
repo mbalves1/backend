@@ -1,10 +1,10 @@
 const router = require("express").Router()
 
-const servicesRouter = require("./services")
+const tansactionRouter = require("./transactions")
 const cardsRouter = require("./cards")
 const authRouter = require("./auth")
 
-router.use("/", servicesRouter)
+router.use("/", tansactionRouter)
 router.use("/", cardsRouter)
 router.use("/", authRouter)
 
