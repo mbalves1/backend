@@ -1,11 +1,11 @@
-const { Service: ServiceModel } = require("../models/Service")
+const { Transaction: TransactionModel } = require("../models/Transaction")
 
-const serviceController = {
+const transactionController = {
   
   create: async(req, res) => {
     const { id } = req.user
     try {
-      const service = {
+      const transaction = {
         name: req.body.name,
         description: req.body.description,
         type: req.body.type,
@@ -16,7 +16,7 @@ const serviceController = {
         id: id
       }
 
-      const response = await ServiceModel.create(service)
+      const response = await TransactionModel.create(transaction)
 
       res.status(201).json({ response, msg: "Fin criado com sucesso!" })
 
@@ -30,16 +30,23 @@ const serviceController = {
       const { id } = req.user;
       const page = parseInt(req.query.page) || 1; // Página atual (padrão: 1 se não for fornecida)
       const perPage = parseInt(req.query.perPage) || 10; // Número de resultados por página (padrão: 10 se não for fornecida)
-
+      const transactionsCount = await TransactionModel.countDocuments({ id });
       // Calcula o índice do primeiro resultado da página atual
       const startIndex = (page - 1) * perPage;
 
-      const services = await ServiceModel.find({ id })
+      const transactions = await TransactionModel.find({ id })
         .skip(startIndex) // Pula os resultados anteriores à página atual
         .limit(perPage); // Limita o número de resultados na página
 
 
-      res.json(services)
+      console.log({
+        transactions,
+        totalCount: transactionsCount
+      })
+      res.json({
+        transactions,
+        totalCount: transactionsCount
+      })
 
     } catch(e) {
       console.log(e);
@@ -49,13 +56,13 @@ const serviceController = {
   getById: async (req, res) => {
     try {
       const id = req.params.id;
-      const services = await ServiceModel.findById(id);
+      const transactions = await TransactionModel.findById(id);
 
-      if (!services) {
+      if (!transactions) {
         res.status(404).json({ msg: "Fin não encontrado." })
         return
       }
-      res.json(services)
+      res.json(transactions)
 
     } catch(e) {
       console.log(e);
@@ -65,14 +72,14 @@ const serviceController = {
   delete: async (req, res) => {
     try {
       const id = req.params.id;
-      const services = await ServiceModel.findById(id);
+      const transactions = await TransactionModel.findById(id);
 
-      if (!services) {
+      if (!transactions) {
         res.status(404).json({ msg: "Fin não encontrado." })
         return
       }
       
-      const deleteService = await ServiceModel.findByIdAndDelete(id)
+      const deleteService = await TransactionModel.findByIdAndDelete(id)
 
       res.status(200).json({deleteService, msg: "Fin excluido com sucesso!"})
 
@@ -85,7 +92,7 @@ const serviceController = {
     try {
       const id = req.params.id;
 
-      const service = {
+      const transaction = {
         name: req.body.name,
         description: req.body.description,
         type: req.body.type,
@@ -95,14 +102,14 @@ const serviceController = {
         attached: req.bosy.attached
       }
 
-      const updateService = await ServiceModel.findByIdAndUpdate(id, service)
+      const updatetransaction = await TransactionModel.findByIdAndUpdate(id, transaction)
 
-      if(!updateService) {
+      if(!updatetransaction) {
         res.status(404).json({ msg: "Fin não encontrado." })
         return
       }
 
-      res.status(200).json({service, msg: "Serviço atualizado com sucesso!"})
+      res.status(200).json({transaction, msg: "Serviço atualizado com sucesso!"})
 
     } catch (e) {
 
@@ -112,4 +119,4 @@ const serviceController = {
 
 }
 
-module.exports = serviceController
+module.exports = transactionController

@@ -4,7 +4,7 @@ const { Schema } = mongoose
 
 const { cardsSchema } = require("./Card")
 
-const serviceSchema = new Schema({
+const transactionSchema = new Schema({
     name: String,
     description: String,
     type: String,
@@ -17,9 +17,9 @@ const serviceSchema = new Schema({
   { timestamps: true }
 )
 
-const Service = mongoose.model("Service", serviceSchema)
+const Transaction = mongoose.model("Transaction", transactionSchema)
 
 module.exports = {
-  Service,
-  serviceSchema,
+  Transaction,
+  transactionSchema,
 }

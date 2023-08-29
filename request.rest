@@ -21,7 +21,19 @@ Content-Type: application/json
 }
 
 ###
-POST https://backend-finplan.vercel.app/api/services
+POST https://backend-finplan.vercel.app/api/transactions
+Content-Type: application/json
+
+{
+  "name": "FII",
+  "description": "Salario",
+  "type": "Entrada",
+  "value": 150,
+  "month": "Março"
+}
+
+###
+POST http://localhost:3001/api/transactions
 Content-Type: application/json
 
 {
