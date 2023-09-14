@@ -2,6 +2,7 @@ const { User: UserModel } = require("../models/Auth")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const checkToken = require("../middleware/checkToken")
+const crypto = require('crypto')
 
 const authController = {
   
@@ -141,6 +142,35 @@ const authController = {
     } catch (error) {
       console.error(error);
       res.status(500).json({ msg: "Erro ao obter usuário, tente novamente mais tarde!" });
+    }
+  },
+
+  forgotPass: async (req, res) => {
+    console.log("aqui")
+    try {
+      const { email }= req.body
+      const user = await UserModel.findOne({ email });
+
+      console.log(user)
+
+      if (!user) return res.status(400).send({ error: 'user not found' })
+
+      const token = crypto.randomBytes(20).toString('hex')
+      const now = new Date();
+      now.setHours(now.getHours() + 1)
+
+      const updatePass = {
+        passwordResetToken: token,
+        passwordResetExpired: now
+      }
+      console.log(updatePass)
+      console.log(token, now)
+      
+      await UserModel.findByIdAndUpdate(user.id, updatePass)
+
+
+    } catch (error) {
+      res.status(400).send({ error: 'Error on forgot password, try again' })
     }
   }
 }

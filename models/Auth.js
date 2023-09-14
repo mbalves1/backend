@@ -7,6 +7,8 @@ const userSchema = new Schema({
   last_name: String,
   email: String,
   password: String,
+  passwordResetToken: String,
+  passwordResetExpired: String,
 },
 { timestamps: true }
 )
