@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const checkToken = require("../middleware/checkToken")
 const crypto = require('crypto')
+const mailer = require('../modules/mailer.js')
 
 const authController = {
   
@@ -146,12 +147,9 @@ const authController = {
   },
 
   forgotPass: async (req, res) => {
-    console.log("aqui")
     try {
       const { email }= req.body
       const user = await UserModel.findOne({ email });
-
-      console.log(user)
 
       if (!user) return res.status(400).send({ error: 'user not found' })
 
@@ -163,11 +161,20 @@ const authController = {
         passwordResetToken: token,
         passwordResetExpired: now
       }
-      console.log(updatePass)
-      console.log(token, now)
       
       await UserModel.findByIdAndUpdate(user.id, updatePass)
 
+      mailer.sendMail({
+        to: email,
+        from: 'mbalves1@outlook.com',
+        template: 'resorces/mail',
+        context: { token }
+      }, (err) => {
+        if (err) {
+          return res.status(400).send({ error: 'user not found' })
+        }
+        return res.send(200)
+      })
 
     } catch (error) {
       res.status(400).send({ error: 'Error on forgot password, try again' })

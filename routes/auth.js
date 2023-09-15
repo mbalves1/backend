@@ -17,7 +17,7 @@ router
 
 router
   .route("/forgot_password")
-  .put((req, res) => authController.forgotPass(req, res))
+  .post((req, res) => authController.forgotPass(req, res))
 
 
   module.exports = router
