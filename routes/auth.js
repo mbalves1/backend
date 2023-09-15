@@ -15,5 +15,9 @@ router
   .route("/user")
   .get(checkToken, (req, res) => authController.getUser(req, res))
 
+router
+  .route("/forgot_password")
+  .post((req, res) => authController.forgotPass(req, res))
+
 
   module.exports = router

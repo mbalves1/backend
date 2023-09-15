@@ -2,6 +2,9 @@ const { User: UserModel } = require("../models/Auth")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const checkToken = require("../middleware/checkToken")
+const crypto = require('crypto')
+const transporter = require('./transporter')
+const nodemailer = require('nodemailer')
 
 const authController = {
   
@@ -141,6 +144,53 @@ const authController = {
     } catch (error) {
       console.error(error);
       res.status(500).json({ msg: "Erro ao obter usuário, tente novamente mais tarde!" });
+    }
+  },
+
+  forgotPass: async (req, res) => {
+    try {
+      const { email }= req.body
+      const user = await UserModel.findOne({ email });
+
+      if (!user) return res.status(400).send({ error: 'user not found' })
+
+      const token = crypto.randomBytes(20).toString('hex')
+      const now = new Date();
+      now.setHours(now.getHours() + 1)
+
+      const updatePass = {
+        passwordResetToken: token,
+        passwordResetExpired: now
+      }
+      
+      await UserModel.findByIdAndUpdate(user.id, updatePass)
+      console.log("AQUI")
+
+      var transport = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        auth: {
+          user: "fincardplan@gmail.com",
+          pass: "jkstpysmdctunljl"
+        }
+      })
+
+      var message = {
+        from: "fincardplan@gmail.com",
+        to: email,
+        subject: "Message title",
+        text: "Message text",
+        html: "<p>Hello</p>"
+      }
+
+      transport.sendMail(message, function(err) {
+        if (err) return res.status(400).send({ error: err })
+      })
+
+      return res.status(200)
+      
+    } catch (error) {
+      res.status(400).send({ error: 'Error on forgot password, try again' })
     }
   }
 }
