@@ -3,7 +3,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const checkToken = require("../middleware/checkToken")
 const crypto = require('crypto')
-const mailer = require('../modules/mailer.js')
+const transporter = require('./transporter')
+const nodemailer = require('nodemailer')
 
 const authController = {
   
@@ -163,19 +164,31 @@ const authController = {
       }
       
       await UserModel.findByIdAndUpdate(user.id, updatePass)
+      console.log("AQUI")
 
-      mailer.sendMail({
-        to: email,
-        from: 'mbalves1@outlook.com',
-        template: 'resorces/mail',
-        context: { token }
-      }, (err) => {
-        if (err) {
-          return res.status(400).send({ error: 'user not found' })
+      var transport = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        auth: {
+          user: "fincardplan@gmail.com",
+          pass: "jkstpysmdctunljl"
         }
-        return res.send(200)
       })
 
+      var message = {
+        from: "fincardplan@gmail.com",
+        to: email,
+        subject: "Message title",
+        text: "Message text",
+        html: "<p>Hello</p>"
+      }
+
+      transport.sendMail(message, function(err) {
+        if (err) return res.status(400).send({ error: err })
+      })
+
+      return res.status(200)
+      
     } catch (error) {
       res.status(400).send({ error: 'Error on forgot password, try again' })
     }
