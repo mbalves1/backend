@@ -154,9 +154,18 @@ const authController = {
 
       if (!user) return res.status(400).send({ error: 'user not found' })
 
-      const token = crypto.randomBytes(20).toString('hex')
+      // const token = crypto.randomBytes(20).toString('hex')
       const now = new Date();
       now.setHours(now.getHours() + 1)
+
+      const secret = process.env.SECRET
+
+      const token = jwt.sign(
+        {
+          id: user._id,
+        },
+        secret,
+      )
 
       const updatePass = {
         passwordResetToken: token,
@@ -164,7 +173,6 @@ const authController = {
       }
       
       await UserModel.findByIdAndUpdate(user.id, updatePass)
-      console.log("AQUI")
 
       var transport = nodemailer.createTransport({
         host: "smtp.gmail.com",
@@ -180,18 +188,57 @@ const authController = {
         to: email,
         subject: "Message title",
         text: "Message text",
-        html: "<p>Hello</p>"
+        html: `<h1>Fincard</h1>
+        <h2>Seu Guia para a Saúde Financeira</h2>
+        <h2>Todas as Suas Contas, 
+        <strong>
+          Um Único Lugar
+        </strong>.</h2>
+        <a href="https://backend-finplan.vercel.app/${token}/reset">
+          Redefinir senha
+        </a>
+        </p>`
       }
 
-      transport.sendMail(message, function(err) {
-        if (err) return res.status(400).send({ error: err })
-      })
-
-      return res.status(200)
+      transport.sendMail(message, (err) => {
+        if (err) {
+          return res.status(400).send({ error: err });
+        } else {
+          return res.status(200).send({ message: 'Password reset email sent successfully' });
+        }
+      });
       
     } catch (error) {
       res.status(400).send({ error: 'Error on forgot password, try again' })
     }
+  },
+
+  resetPass: async (req, res) => {
+    const { email, token, password } = req.body
+    try {
+      const user = await UserModel.findOne({ email })
+        .select('+passwordResetToken passwordResetExpired')
+
+      if (!user) return res.status(400).send({ error: 'user not found in reset' })
+
+      if (token !== user.passwordResetToken) return res.status(400).send({ error: 'token invalid' })
+
+      const now = new Date();
+      if (now > user.passwordResetExpired) return res.status(400).send({ error: 'token expired, generate a new one' })
+
+      const salt = await bcrypt.genSalt(12)
+      const passwordHash = await bcrypt.hash(password, salt)
+
+      user.password = passwordHash
+
+      await user.save()
+
+      res.send()
+
+    } catch (error) {
+      res.status(400).send({ error: 'Error canoot reset password, try again' })
+    }
+
   }
 }
 

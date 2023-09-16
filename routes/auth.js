@@ -19,5 +19,9 @@ router
   .route("/forgot_password")
   .post((req, res) => authController.forgotPass(req, res))
 
+router
+  .route("/reset_password")
+  .post((req, res) => authController.resetPass(req, res))
+
 
   module.exports = router
