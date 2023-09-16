@@ -194,7 +194,7 @@ const authController = {
         <strong>
           Um Único Lugar
         </strong>.</h2>
-        <a href="https://fincard.vercel.app/${token}/email${email}/reset">
+        <a href="https://fincard.vercel.app/${token}/${email}/reset">
           Redefinir senha
         </a>
         </p>`
@@ -217,7 +217,7 @@ const authController = {
     const { email, token, password } = req.body
     try {
       const user = await UserModel.findOne({ email })
-        .select('+passwordResetToken passwordResetExpired')
+        .select('passwordResetToken passwordResetExpired')
 
       if (!user) return res.status(400).send({ error: 'user not found in reset' })
 
