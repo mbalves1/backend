@@ -194,7 +194,7 @@ const authController = {
         <strong>
           Um Único Lugar
         </strong>.</h2>
-        <a href="https://fincard.vercel.app/${token}/reset">
+        <a href="https://fincard.vercel.app/${token}/email${email}/reset">
           Redefinir senha
         </a>
         </p>`
