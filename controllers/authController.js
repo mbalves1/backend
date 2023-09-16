@@ -194,7 +194,7 @@ const authController = {
         <strong>
           Um Único Lugar
         </strong>.</h2>
-        <a href="https://backend-finplan.vercel.app/${token}/reset">
+        <a href="https://finplan.vercel.app/${token}/reset">
           Redefinir senha
         </a>
         </p>`
