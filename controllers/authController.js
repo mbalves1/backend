@@ -11,7 +11,7 @@ const authController = {
   create: async(req, res) => {
     try {
       const {
-        first_name, last_name, email, password, confirmpassword
+        first_name, last_name, email, terms, password, confirmpassword
       } = req.body
 
       // Validation
@@ -26,6 +26,9 @@ const authController = {
       }
       if (password !== confirmpassword) {
         res.status(422).json({msg: "As senhas não conferem!"})
+      }
+      if (!terms) {
+        res.status(422).json({msg: "O aceite dos termos são obrogatórios!"})
       }
 
       // Check if user exists
@@ -44,6 +47,7 @@ const authController = {
         first_name,
         last_name,
         email,
+        terms,
         password: passwordHash
       })
 
