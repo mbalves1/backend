@@ -28,8 +28,8 @@ const transactionController = {
   getAll: async (req, res) => {
     try {
       const { id } = req.user;
-      const page = parseInt(req.query.page) || 1; // Página atual (padrão: 1 se não for fornecida)
-      const perPage = parseInt(req.query.perPage) || 10; // Número de resultados por página (padrão: 10 se não for fornecida)
+      const page = parseInt(req.query.page) || 1;
+      const perPage = parseInt(req.query.perPage) || 10;
       const transactionsCount = await TransactionModel.countDocuments({ id });
       // Calcula o índice do primeiro resultado da página atual
       const startIndex = (page - 1) * perPage;
@@ -38,11 +38,6 @@ const transactionController = {
         .skip(startIndex) // Pula os resultados anteriores à página atual
         .limit(perPage); // Limita o número de resultados na página
 
-
-      console.log({
-        transactions,
-        totalCount: transactionsCount
-      })
       res.json({
         transactions,
         totalCount: transactionsCount
@@ -50,6 +45,35 @@ const transactionController = {
 
     } catch(e) {
       console.log(e);
+    }
+  },
+
+  getFilter: async (req, res) => {
+    try {
+      const { id } = req.user;
+      const filter = req.params.filter;
+      const page = parseInt(req.query.page) || 1;
+      const perPage = parseInt(req.query.perPage) || 10;
+      const transactionsCount = await TransactionModel.countDocuments({ id });
+      // Calcula o índice do primeiro resultado da página atual
+      const startIndex = (page - 1) * perPage;
+
+      const [filterKey, filterValue] = filter.split('=');
+      const filterObject = { [filterKey]: filterValue };
+
+      const transactions = await TransactionModel.find({ id, ...filterObject })
+        .where(filter)
+        .skip(startIndex) // Pula os resultados anteriores à página atual
+        .limit(perPage); // Limita o número de resultados na página
+
+      res.json({
+        transactions,
+        totalCount: transactionsCount
+      })
+
+    } catch(e) {
+      console.log(e);
+      res.status(500).json({ error: 'Internal server error' });
     }
   },
 

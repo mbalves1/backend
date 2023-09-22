@@ -12,6 +12,10 @@ router
   .get(checkToken, (req, res) => transactionController.getAll(req, res))
 
 router
+  .route("/transactions/filter/:filter")  
+  .get(checkToken, (req, res) => transactionController.getFilter(req, res));
+
+router
   .route("/transactions/:id")
   .get(checkToken, (req, res) => transactionController.getById(req, res))
 
