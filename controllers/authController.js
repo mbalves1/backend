@@ -190,9 +190,9 @@ const authController = {
       var message = {
         from: "fincardplan@gmail.com",
         to: email,
-        subject: "Message title",
-        text: "Message text",
-        html: `<h1>Fincard</h1>
+        subject: "fin.card reset password",
+        text: "Reset password",
+        html: `<h1>fin.card</h1>
         <h2>Seu Guia para a Saúde Financeira</h2>
         <h2>Todas as Suas Contas, 
         <strong>
