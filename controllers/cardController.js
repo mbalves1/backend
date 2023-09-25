@@ -98,7 +98,7 @@ const cardController = {
       res.status(200).json({service, msg: "Cartão atualizado com sucesso!"})
 
     } catch (e) {
-
+      console.log(e);
     }
 
   }

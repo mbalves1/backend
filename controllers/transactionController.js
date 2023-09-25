@@ -115,15 +115,13 @@ const transactionController = {
   update: async (req, res) => {
     try {
       const id = req.params.id;
-
       const transaction = {
         name: req.body.name,
         description: req.body.description,
         type: req.body.type,
         value: req.body.value,
         month: req.body.month,
-        method_payment: req.body.method_payment,
-        attached: req.bosy.attached
+        method_payment: req.body.method_payment
       }
 
       const updatetransaction = await TransactionModel.findByIdAndUpdate(id, transaction)
@@ -136,7 +134,7 @@ const transactionController = {
       res.status(200).json({transaction, msg: "Serviço atualizado com sucesso!"})
 
     } catch (e) {
-
+      res.status(500).json({ msg: "Erro ao atualizar transação." });
     }
 
   }
