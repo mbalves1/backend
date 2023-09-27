@@ -3,6 +3,7 @@ const mongoose = require("mongoose")
 const { Schema } = mongoose
 
 const { cardsSchema } = require("./Card")
+const { categorySchema } = require("./Category")
 
 const transactionSchema = new Schema({
     name: String,
@@ -11,6 +12,7 @@ const transactionSchema = new Schema({
     method_payment: String,
     value: Number,
     month: String,
+    category: [categorySchema],
     attached: [cardsSchema],
     id: String
   },
