@@ -65,7 +65,6 @@ const transactionController = {
       const transactionsFinder = await TransactionModel.find({ id, ...filterObject })
         .where(filter);
 
-      console.log("transactionsCount", transactionsFinder.length)
 
       const transactions = await TransactionModel.find({ id, ...filterObject })
         .where(filter)
