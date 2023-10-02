@@ -55,21 +55,27 @@ const transactionController = {
       const filter = req.params.filter;
       const page = parseInt(req.query.page) || 1;
       const perPage = parseInt(req.query.perPage) || 10;
-      const transactionsCount = await TransactionModel.countDocuments({ id });
+      // const transactionsCount = await TransactionModel.countDocuments({ id });
       // Calcula o índice do primeiro resultado da página atual
       const startIndex = (page - 1) * perPage;
 
       const [filterKey, filterValue] = filter.split('=');
       const filterObject = { [filterKey]: filterValue };
 
+      const transactionsFinder = await TransactionModel.find({ id, ...filterObject })
+        .where(filter);
+
+      console.log("transactionsCount", transactionsFinder.length)
+
       const transactions = await TransactionModel.find({ id, ...filterObject })
         .where(filter)
         .skip(startIndex) // Pula os resultados anteriores à página atual
         .limit(perPage); // Limita o número de resultados na página
 
+
       res.json({
         transactions,
-        totalCount: transactionsCount
+        totalCount: transactionsFinder.length
       })
 
     } catch(e) {
