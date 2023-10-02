@@ -10,6 +10,7 @@ const transactionController = {
         description: req.body.description,
         type: req.body.type,
         value: req.body.value,
+        installment: req.body.installment,
         month: req.body.month,
         method_payment: req.body.method_payment,
         attached: req.body.attached,
@@ -126,6 +127,7 @@ const transactionController = {
         description: req.body.description,
         type: req.body.type,
         value: req.body.value,
+        installment: req.body.installment,
         month: req.body.month,
         category: req.body.category,
         method_payment: req.body.method_payment
