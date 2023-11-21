@@ -9,59 +9,54 @@ const nodemailer = require('nodemailer')
 const authController = {
   
   create: async(req, res) => {
+    const {
+      first_name, last_name, email, terms, password, confirmpassword
+    } = req.body
+
+    // Validation
+    if(!first_name) {
+      res.status(422).json({msg: "O nome é obrigatório!"})
+    }
+    if(!email) {
+      res.status(422).json({msg: "O email é obrigatório!"})
+    }
+    if(!password) {
+      res.status(422).json({msg: "O password é obrigatório!"})
+    }
+    if (password !== confirmpassword) {
+      res.status(422).json({msg: "As senhas não conferem!"})
+    }
+    if (!terms) {
+      res.status(422).json({msg: "O aceite dos termos são obrogatórios!"})
+    }
+
+    // Check if user exists
+    const userExists = await UserModel.findOne({ email: email })
+
+    if(userExists) {
+      res.status(422).json({msg: "Por favor, use outro email!"})
+    }
+
+    // crete password
+    const salt = await bcrypt.genSalt(12)
+    const passwordHash = await bcrypt.hash(password, salt)
+
+    // create user
+    const user = new UserModel({
+      first_name,
+      last_name,
+      email,
+      terms,
+      password: passwordHash
+    })
+
     try {
-      const {
-        first_name, last_name, email, terms, password, confirmpassword
-      } = req.body
+      await user.save()
 
-      // Validation
-      if(!first_name) {
-        res.status(422).json({msg: "O nome é obrigatório!"})
-      }
-      if(!email) {
-        res.status(422).json({msg: "O email é obrigatório!"})
-      }
-      if(!password) {
-        res.status(422).json({msg: "O password é obrigatório!"})
-      }
-      if (password !== confirmpassword) {
-        res.status(422).json({msg: "As senhas não conferem!"})
-      }
-      if (!terms) {
-        res.status(422).json({msg: "O aceite dos termos são obrogatórios!"})
-      }
-
-      // Check if user exists
-      const userExists = await UserModel.findOne({ email: email })
-
-      if(userExists) {
-        res.status(422).json({msg: "Por favor, use outro email!"})
-      }
-
-      // crete password
-      const salt = await bcrypt.genSalt(12)
-      const passwordHash = await bcrypt.hash(password, salt)
-
-      // create user
-      const user = new UserModel({
-        first_name,
-        last_name,
-        email,
-        terms,
-        password: passwordHash
-      })
-
-      try {
-        await user.save()
-
-        res.status(201).json({ msg: "Usuário criado com sucesso!" })
-      } catch (error) {
-        console.error(error)
-        res.status(500).json({ msg: "Erro ao logar, tente novamente mais tarde!" })
-      }
-
-    } catch(e) {
-      console.log(e);
+      res.status(201).json({ msg: "Usuário criado com sucesso!" })
+    } catch (error) {
+      console.error(error)
+      res.status(500).json({ msg: "Erro ao logar, tente novamente mais tarde!" })
     }
   },
 
