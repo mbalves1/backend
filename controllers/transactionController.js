@@ -40,13 +40,15 @@ const transactionController = {
         .skip(startIndex) // Pula os resultados anteriores à página atual
         .limit(perPage); // Limita o número de resultados na página
 
+      console.log(transactions)
       res.json({
         transactions,
         totalCount: transactionsCount
       })
 
-    } catch(e) {
-      console.log(e);
+    } catch(error) {
+      console.error(error);
+      res.status(500).json({ error: 'Erro ao tentar acessar as informações, por favor tente mais tarde' });
     }
   },
 
