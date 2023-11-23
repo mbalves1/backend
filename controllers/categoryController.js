@@ -53,7 +53,7 @@ const categoryController = {
   update: async (req, res) => {
     try {
       const id = req.params.id;
-      console.log("id", id)
+
       const category = {
         categoryname: req.body.categoryname,
       }

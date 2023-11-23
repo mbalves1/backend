@@ -40,7 +40,6 @@ const transactionController = {
         .skip(startIndex) // Pula os resultados anteriores à página atual
         .limit(perPage); // Limita o número de resultados na página
 
-      console.log(transactions)
       res.json({
         transactions,
         totalCount: transactionsCount

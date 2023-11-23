@@ -22,7 +22,7 @@ const cardController = {
       res.status(201).json({ response, msg: "Cartão criado com sucesso!" })
 
     } catch(e) {
-      console.log(e);
+      console.error(e);
     }
   },
 
@@ -34,7 +34,7 @@ const cardController = {
       res.json(cards)
 
     } catch(e) {
-      console.log(e);
+      console.error(e);
     }
   },
 
@@ -50,7 +50,7 @@ const cardController = {
       res.json(cards)
 
     } catch(e) {
-      console.log(e);
+      console.error(e);
     }
   },
 
@@ -69,7 +69,7 @@ const cardController = {
       res.status(200).json({deleteService, msg: "Cartão excluido com sucesso!"})
 
     } catch(e) {
-      console.log(e);
+      console.error(e);
     }
   },
 
@@ -95,10 +95,11 @@ const cardController = {
         return
       }
 
-      res.status(200).json({service, msg: "Cartão atualizado com sucesso!"})
-
+      return res.status(200).json({msg: "Cartão atualizado com sucesso!"})
+      
     } catch (e) {
-      console.log(e);
+      console.error(e)
+      res.status(500).json({ msg: "Erro ao atualizar cartão." });
     }
 
   }
