@@ -38,7 +38,8 @@ const transactionController = {
 
       const transactions = await TransactionModel.find({ id })
         .skip(startIndex) // Pula os resultados anteriores à página atual
-        .limit(perPage); // Limita o número de resultados na página
+        .limit(perPage) // Limita o número de resultados na página
+        .sort({ createdAt: -1 });
 
       res.json({
         transactions,
