@@ -12,6 +12,8 @@ const transactionSchema = new Schema({
     method_payment: String,
     value: Number,
     installment: Number,
+    installment_total: Number,
+    transaction_date: Date,
     month: String,
     category: [categorySchema],
     attached: [cardsSchema],

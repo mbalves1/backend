@@ -11,6 +11,8 @@ const transactionController = {
         type: req.body.type,
         value: req.body.value,
         installment: req.body.installment,
+        installment_total: req.body.installment_total,
+        transaction_date: req.body.transaction_date,
         month: req.body.month,
         method_payment: req.body.method_payment,
         attached: req.body.attached,
@@ -130,6 +132,8 @@ const transactionController = {
         type: req.body.type,
         value: req.body.value,
         installment: req.body.installment,
+        installment_total: req.body.installment_total,
+        transaction_date: req.body.transaction_date,
         month: req.body.month,
         category: req.body.category,
         method_payment: req.body.method_payment
