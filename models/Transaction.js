@@ -14,7 +14,9 @@ const transactionSchema = new Schema({
     installment: Number,
     installment_total: Number,
     transaction_date: Date,
+    planned_launch: Boolean,
     month: String,
+    year: String,
     category: [categorySchema],
     attached: [cardsSchema],
     id: String
